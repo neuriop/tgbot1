@@ -1,7 +1,10 @@
-package calculator;
+package calculator.credits;
+
+import calculator.CalculateTable;
 
 public class ToyotaCredit extends CreditTable {
     public ToyotaCredit() {
+        calculator = new CalculateTable();
         percentTable = new double[][]{
                 {3.49, 6.99, 8.99, 11.99, 11.99},
                 {2.49, 5.99, 8.99, 11.99, 11.99},
@@ -11,9 +14,10 @@ public class ToyotaCredit extends CreditTable {
         initialPayment = new double[]{0.3, 0.4, 0.5, 0.6, 0.7};
         monthList = new int[]{12, 24, 36, 48, 60};
         initialCommission = new double[]{2.99, 2.99, 2.99, 0, 0};
-        for (int i : extraCondition = new int[5]) {
-            extraCondition[i] = monthList[i];
-        }
-        alternatePercentTable = new double[][]{};
+    }
+
+    @Override
+    public String calculate(double totalCost, double initialPayment, double monthlyPayment) {
+        return calculator.calculate(totalCost, initialPayment, monthlyPayment, new ToyotaCredit());
     }
 }

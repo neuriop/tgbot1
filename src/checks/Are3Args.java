@@ -11,3 +11,4 @@ public class Are3Args implements Check {
         return strings.length == 3;
     }
 }
+

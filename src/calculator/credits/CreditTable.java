@@ -1,12 +1,13 @@
-package calculator;
+package calculator.credits;
+
+import calculator.CreditCalculator;
 
 public abstract class CreditTable {
+    protected CreditCalculator calculator;
     protected double[][] percentTable;
     protected double[] initialPayment;
     protected int[] monthList;
     protected double[] initialCommission;
-    protected int[] extraCondition;
-    protected double[][] alternatePercentTable;
 
     public double[][] getPercentTable() {
         return percentTable;
@@ -24,11 +25,5 @@ public abstract class CreditTable {
         return initialCommission;
     }
 
-    public int[] getExtraCondition() {
-        return extraCondition;
-    }
-
-    public double[][] getAlternatePercentTable() {
-        return alternatePercentTable;
-    }
+    public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment);
 }

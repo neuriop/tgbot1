@@ -1,6 +1,7 @@
 package checks;
 
 import calculator.CreditCalculator;
+import calculator.ReturnCredits;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,8 @@ public class Checker implements Validator{
             for (int i = 0; i < nums.length; i++) {
                 nums[i] = Double.parseDouble(strings[i]);
             }
-            CreditCalculator creditCalculator = new CreditCalculator();
-            return creditCalculator.countCredit(nums[0], nums[1], nums[2]);
+            ReturnCredits returnCredits = new ReturnCredits();
+            return returnCredits.returnCredits(nums[0], nums[1], nums[2]);
         }
         return requestCheck(strings);
     }
