@@ -23,6 +23,7 @@ public class CalculateMazda extends CreditCalculator {
         }
         result += "\nThe closest monthly payment to " + monthlyPayment + " you can do is: " + Math.ceil(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[lowDiffNext], credit.getPercentTable()[lowDiffPrev][lowDiffNext]));
         result += "\nTotal cost of the credit is: " + Math.ceil(totalCostCounter(totalCost, initialPayment, credit));
+        System.out.println(result);
         return result;
     }
 }
