@@ -1,17 +1,12 @@
 package calculator;
-
 import calculator.credits.CreditTable;
-import calculator.credits.ToyotaCredit;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CreditCalculator {
     //private List<CreditTable> credits = new ArrayList<>();
 
-    public String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit) {
-        return "";
-    }
+    public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit);
 
     protected boolean lowDiffNextCounter(double totalCost, double monthlyPay, CreditTable credit, int lowDiffPrev, int lowDiffNext, int i) {
         return Math.abs(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[lowDiffNext], credit.getPercentTable()[lowDiffPrev][lowDiffNext]) - monthlyPay) > Math.abs(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[i], credit.getPercentTable()[lowDiffPrev][i]) - monthlyPay);
