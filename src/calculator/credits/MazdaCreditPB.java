@@ -1,8 +1,5 @@
 package calculator.credits;
 
-import calculator.CalculateMazda;
-import calculator.CalculateTable;
-
 public class MazdaCreditPB extends CreditTable {
     public MazdaCreditPB() {
         calculator = new CalculateMazda();

@@ -1,13 +1,10 @@
 package checks;
-
-import calculator.CreditCalculator;
-import calculator.ReturnCredits;
-
+import calculator.credits.ReturnCredits;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Checker implements Validator{
-    List<Check> checks = new ArrayList<>();
+    private List<Check> checks = new ArrayList<>();
 
     public Checker(){
         checks.add(new Are3Args());

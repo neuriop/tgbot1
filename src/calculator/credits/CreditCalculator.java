@@ -1,10 +1,7 @@
-package calculator;
-import calculator.credits.CreditTable;
-import java.util.ArrayList;
-import java.util.List;
+package calculator.credits;
+
 
 public abstract class CreditCalculator {
-    //private List<CreditTable> credits = new ArrayList<>();
 
     public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit);
 
@@ -61,46 +58,4 @@ public abstract class CreditCalculator {
     }
 
 }
-
-//public String countCredit(double totalCost, double initialPayment, double monthlyPayment) {
-//    String result = "";
-//    for (CreditTable credit : credits) {
-//        result += creditCalculator(totalCost, initialPayment, monthlyPayment, credit) + "\n";
-//    }
-//    return result;
-//}
-//
-//private String creditCalculator(double totalCost, double initialPay, double monthlyPay, CreditTable credit) {
-//    String result = "";
-//    int lowDiffPrev = 0;
-//    int lowDiffNext = 0;
-//    for (int i = 1; i < credit.getMonthList().length; i++) {
-//        if (lowDiffPrevCounter(totalCost, initialPay, credit, lowDiffPrev, i)) {
-//            lowDiffPrev = i;
-//        }
-//    }
-//    if (initialPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev]) != initialPay) {
-//        result += "Initial payment of " + initialPay + " is not available. The closest available payment is " + initialPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev]);
-//    }
-//    result += "\nInitial\t\tMonthly payment";
-//    result += "\npayment";
-//    for (int i : credit.getMonthList()) {
-//        result += "\t\t" + i;
-//    }
-//    result += "\n" + initialPay + "\t";
-//    for (int i = 1; i < credit.getMonthList().length; i++) {
-//        if (lowDiffNextCounter(totalCost, monthlyPay, credit, lowDiffPrev, lowDiffNext, i)) {
-//            lowDiffNext = i;
-//        }
-//    }
-//    for (int i = 0; i < credit.getPercentTable()[lowDiffPrev].length; i++) {
-//        if (lowDiffNext == i) {
-//            result += "\t" + "\u001B[32m" + Math.ceil(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[i], credit.getPercentTable()[lowDiffPrev][i])) + "\u001B[0m";
-//        } else
-//            result += "\t" + Math.ceil(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[i], credit.getPercentTable()[lowDiffPrev][i]));
-//    }
-//    result += "\nThe closest monthly payment to " + monthlyPay + " you can do is: " + Math.ceil(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[lowDiffNext], credit.getPercentTable()[lowDiffPrev][lowDiffNext]));
-//    result += "\nTotal cost of the credit is: " + totalCostCounter(totalCost, credit, lowDiffPrev, lowDiffNext);
-//    return result;
-//}
 

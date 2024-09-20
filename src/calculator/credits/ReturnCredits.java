@@ -1,8 +1,4 @@
-package calculator;
-
-import calculator.credits.CreditTable;
-import calculator.credits.MazdaCreditPB;
-import calculator.credits.ToyotaCredit;
+package calculator.credits;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +12,11 @@ public class ReturnCredits {
     }
 
     public String returnCredits(double totalCost, double initialPayment, double monthlyPayment){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (CreditTable credit : credits) {
-            result += "\n\n" + credit.calculate(totalCost, initialPayment, monthlyPayment);
+            result.append("\n\n").append(credit.calculate(totalCost, initialPayment, monthlyPayment));
         }
-        return result;
+        System.out.println(result);
+        return result.toString();
     }
 }

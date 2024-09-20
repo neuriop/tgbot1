@@ -1,7 +1,5 @@
 package calculator.credits;
 
-import calculator.CalculateTable;
-
 public class ToyotaCredit extends CreditTable {
     public ToyotaCredit() {
         calculator = new CalculateTable();

@@ -1,7 +1,5 @@
 package calculator.credits;
 
-import calculator.CreditCalculator;
-
 public abstract class CreditTable {
     protected CreditCalculator calculator;
     protected double[][] percentTable;
