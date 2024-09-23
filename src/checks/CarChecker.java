@@ -3,10 +3,10 @@ import calculator.credits.ReturnCredits;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Checker implements Validator{
+public class CarChecker implements Validator{
     private List<Check> checks = new ArrayList<>();
 
-    public Checker(){
+    public CarChecker(){
         checks.add(new Are3Args());
         checks.add(new IsValidNum());
     }
@@ -22,7 +22,12 @@ public class Checker implements Validator{
     }
 
     private String[] stringSplitter(String string){
-        return string.split("\n");
+        String[] split = string.split("\n");
+        String[] res = new String[5];
+        for (int i = 1; i < split.length; i++) {
+            res[i-1] = split[i];
+        }
+        return res;
     }
 
     private String returnTable(String[] strings){

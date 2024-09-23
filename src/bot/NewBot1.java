@@ -1,6 +1,7 @@
 package bot;
 
-import checks.Checker;
+import calculator.launchpad.LPChecker;
+import checks.CarChecker;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -26,14 +27,35 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
             long chat_id = update.getMessage().getChatId();
+            String message = update.getMessage().getText();
             System.out.println(update.getMessage().getText());
-            Checker checker = new Checker();
-            String response = checker.processString(update.getMessage().getText());
-            sendMessage(response, chat_id);
+            if (message.equals("/start") || message.contains("start")){
+                sendMessage("Type \"/help\" for list of commands.", chat_id);
+            } else if (message.equals("/help") || message.contains("help")) {
+                sendMessage("/carcalc - calculate car credit\n" +
+                        "/lpcalc - launchpool calculator", chat_id);
+            } else if (message.equals("/carcalc")){
+                carCalculator(update, chat_id);
+            } else if (message.equals("/lpcalc") || message.contains("lpcalc")){
+                lpCalculator(update, chat_id);
+            } else {
+                sendMessage("Type \"/start\" to begin.", chat_id);
+            }
         }
     }
 
-    
+    private void lpCalculator(Update update, long chat_id){
+        LPChecker lpChecker = new LPChecker();
+        String response = lpChecker.processString(update.getMessage().getText());
+        sendMessage(response, chat_id);
+    }
+
+    private void carCalculator(Update update, long chat_id) {
+        CarChecker carChecker = new CarChecker();
+        String response = carChecker.processString(update.getMessage().getText());
+        sendMessage(response, chat_id);
+    }
+
 
     private void sendMessage(String text, long chat_id){
         SendMessage message = SendMessage
