@@ -10,6 +10,6 @@ public class Are5Args implements Check {
 
     @Override
     public String errorMessage() {
-        return "Invalid amount of arguments (5 required)";
+        return "5 arguments required: total reward, total cost, individual submission, apr percent, apr days";
     }
 }
