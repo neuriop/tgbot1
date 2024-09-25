@@ -1,7 +1,7 @@
 package bot;
 
-import calculator.launchpad.IsValidNum;
 import calculator.launchpad.LPChecker;
+import checks.CarChecker;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class Conversation {
                 return "Enter command:\n/carcredit - calculate car credit\n/launchpool - calculate launchpool";
             } else if (input.equals("/carcredit")) {
                 lastCommand = "carcredit";
+                return "Enter total car price";
             } else if (input.equals("/launchpool")) {
                 lastCommand = "launchpool";
                 return "Enter total pool prize";
@@ -71,6 +72,7 @@ public class Conversation {
                 }
                 lastCommand = null;
                 inputs.clear();
+                System.out.println(new LPChecker().processString(res.toString()));
                 return new LPChecker().processString(res.toString());
             default:
                 return "something went wrong";
@@ -79,13 +81,50 @@ public class Conversation {
 
     @Nullable
     private static String stringValidator(String[] arg) {
-        if (!new IsValidNum().update(arg)){
+        if (!new calculator.launchpad.IsValidNum().update(arg)){
+            return "Invalid number.";
+        }
+        return null;
+    }
+
+    @Nullable
+    private static String stringValidator2(String[] arg) {
+        if (!new checks.IsValidNum().update(arg)){
             return "Invalid number.";
         }
         return null;
     }
 
     private String processCarCredit(String input) {
-        return "not implemented yet";
+        String[] arg = {input};
+        switch (steps) {
+            case 0:
+                if (stringValidator2(arg) != null)
+                    return stringValidator(arg);
+                inputs.add(input);
+                steps++;
+                return "Enter initial payment amount you are able to make";
+            case 1:
+                if (stringValidator2(arg) != null)
+                    return stringValidator(arg);
+                inputs.add(input);
+                steps++;
+                return "Enter monthly payment you are able to make";
+            case 2:
+                if (stringValidator2(arg) != null)
+                    return stringValidator(arg);
+                inputs.add(input);
+                steps = 0;
+                StringBuilder res = new StringBuilder();
+                for (String in : inputs) {
+                    res.append(in).append("\n");
+                }
+                lastCommand = null;
+                inputs.clear();
+                System.out.println(new CarChecker().processString(res.toString()));
+                return new CarChecker().processString(res.toString());
+            default:
+                return "something went wrong";
+        }
     }
 }
