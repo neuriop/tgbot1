@@ -26,11 +26,7 @@ public class LPChecker implements Validator {
 
     private String[] stringSplitter(String string){
         String[] split = string.split("\n");
-        String[] res = new String[5];
-        for (int i = 1; i < split.length; i++) {
-            res[i - 1] = split[i];
-        }
-        return res;
+        return split;
     }
 
     private String returnCalculation(String[] strings){

@@ -8,10 +8,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
     private TelegramClient telegramClient;
+    private Map<Long, Conversation> users = new HashMap<>();
 
     public NewBot1(String botToken) {
         telegramClient = new OkHttpTelegramClient(botToken);
@@ -24,27 +28,19 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
 
     @Override
     public void consume(Update update) {
-        // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
+            long user_id = update.getMessage().getFrom().getId();
             long chat_id = update.getMessage().getChatId();
             String message = update.getMessage().getText();
             System.out.println(update.getMessage().getText());
-            if (message.equals("/start") || message.contains("start")){
-                sendMessage("Type \"/help\" for list of commands.", chat_id);
-            } else if (message.equals("/help") || message.contains("help")) {
-                sendMessage("/carcalc - calculate car credit\n" +
-                        "/lpcalc - launchpool calculator", chat_id);
-            } else if (message.equals("/carcalc")){
-                carCalculator(update, chat_id);
-            } else if (message.equals("/lpcalc") || message.contains("lpcalc")){
-                lpCalculator(update, chat_id);
-            } else {
-                sendMessage("Type \"/start\" to begin.", chat_id);
+            if (!users.containsKey(update.getMessage().getFrom().getId())) {
+                users.put(update.getMessage().getFrom().getId(), new Conversation());
             }
+            sendMessage(users.get(user_id).processConversation(message), chat_id);
         }
     }
 
-    private void lpCalculator(Update update, long chat_id){
+    private void lpCalculator(Update update, long chat_id) {
         LPChecker lpChecker = new LPChecker();
         String response = lpChecker.processString(update.getMessage().getText());
         sendMessage(response, chat_id);
@@ -57,7 +53,7 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
     }
 
 
-    private void sendMessage(String text, long chat_id){
+    private void sendMessage(String text, long chat_id) {
         SendMessage message = SendMessage
                 .builder()
                 .chatId(chat_id)
@@ -71,3 +67,16 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
     }
 
 }
+//
+//if (message.equals("/start") || message.contains("start")){
+//sendMessage("Type \"/help\" for list of commands.", chat_id);
+//            } else if (message.equals("/help") || message.contains("help")) {
+//sendMessage("/carcalc - calculate car credit\n" +
+//                    "/lpcalc - launchpool calculator", chat_id);
+//            } else if (message.equals("/carcalc")){
+//carCalculator(update, chat_id);
+//            } else if (message.equals("/lpcalc") || message.contains("lpcalc")){
+//lpCalculator(update, chat_id);
+//            } else {
+//sendMessage("Type \"/start\" to begin.", chat_id);
+//            }
