@@ -19,19 +19,26 @@ public class Conversation {
         } else if (Objects.equals(lastCommand, "launchpool")) {
             return processLPChecker(input);
         } else {
-            steps = 0;
-            inputs.clear();
-            if (input.contains("start") || input.contains("help")) {
-                return "Enter command:\n/carcredit - calculate car credit\n/launchpool - calculate launchpool";
-            } else if (input.equals("/carcredit")) {
-                lastCommand = "carcredit";
-                return "Enter total car price";
-            } else if (input.equals("/launchpool")) {
-                lastCommand = "launchpool";
-                return "Enter total pool prize";
-            }
+            String x = setCommand(input);
+            if (x != null) return x;
             return "Unknown input";
         }
+    }
+
+    @Nullable
+    private String setCommand(String input) {
+        steps = 0;
+        inputs.clear();
+        if (input.contains("start") || input.contains("help")) {
+            return "Enter command:\n/carcredit - calculate car credit\n/launchpool - calculate launchpool";
+        } else if (input.equals("/carcredit")) {
+            lastCommand = "carcredit";
+            return "Enter total car price";
+        } else if (input.equals("/launchpool")) {
+            lastCommand = "launchpool";
+            return "Enter total pool prize";
+        }
+        return null;
     }
 
     private String processLPChecker(String input) {

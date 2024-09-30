@@ -32,26 +32,13 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
             long user_id = update.getMessage().getFrom().getId();
             long chat_id = update.getMessage().getChatId();
             String message = update.getMessage().getText();
-            System.out.println(update.getMessage().getText());
-            if (!users.containsKey(update.getMessage().getFrom().getId())) {
-                users.put(update.getMessage().getFrom().getId(), new Conversation());
+            System.out.println(message);
+            if (!users.containsKey(user_id)) {
+                users.put(user_id, new Conversation());
             }
             sendMessage(users.get(user_id).processConversation(message), chat_id);
         }
     }
-
-    private void lpCalculator(Update update, long chat_id) {
-        LPChecker lpChecker = new LPChecker();
-        String response = lpChecker.processString(update.getMessage().getText());
-        sendMessage(response, chat_id);
-    }
-
-    private void carCalculator(Update update, long chat_id) {
-        CarChecker carChecker = new CarChecker();
-        String response = carChecker.processString(update.getMessage().getText());
-        sendMessage(response, chat_id);
-    }
-
 
     private void sendMessage(String text, long chat_id) {
         SendMessage message = SendMessage
