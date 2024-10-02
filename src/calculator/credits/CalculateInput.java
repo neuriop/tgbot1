@@ -3,14 +3,23 @@ package calculator.credits;
 public class CalculateInput extends CreditCalculator {
     @Override
     public String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit) {
-        StringBuilder result = new StringBuilder();
-        result.append("Calculated result for ").append(credit.getClass().getSimpleName());
-        result.append("Total car cost: ").append(totalCost);
-        result.append("Initial payment: ").append(credit.getInitialPayment()[(int) monthlyPayment] * 100).append("% - ").append(totalCost * credit.getInitialPayment()[(int) monthlyPayment]);
-        result.append("Monthly payment: ").append((totalCost - (totalCost * credit.getInitialPayment()[(int) monthlyPayment])) / credit.getMonthList()[(int) monthlyPayment] * (credit.getPercentTable()[(int) monthlyPayment][(int) initialPayment] / 100 + 1));
-        result.append("Initial commission: ").append(credit.getInitialCommission()[(int) monthlyPayment]).append("% - ").append(totalCost*credit.getInitialPayment()[(int) monthlyPayment]*(credit.getInitialCommission()[(int) monthlyPayment]/100));
-        result.append("Total credit cost: ").append(((totalCost - (totalCost * credit.getInitialPayment()[(int) monthlyPayment])) / credit.getMonthList()[(int) monthlyPayment] * (credit.getPercentTable()[(int) monthlyPayment][(int) initialPayment] / 100 + 1))*credit.getMonthList()[(int) monthlyPayment]+(totalCost*credit.getInitialPayment()[(int) monthlyPayment]*(credit.getInitialCommission()[(int) monthlyPayment]/100)));
+        return "";
+    }
 
-        return result.toString();
+    @Override
+    public String calculate(double totalCost, int i, int j, CreditTable credit) {
+        String result = "";
+        double percent = credit.getPercentTable()[i][j];
+        double initialPayment = credit.getInitialPayment()[j];
+        int month = credit.getMonthList()[j];
+        double initialCommission = credit.getInitialCommission()[j];
+        result += "Calculated result for " + credit.getClass().getSimpleName();
+        result += "\nTotal car cost: " + totalCost;
+        result += "\nInitial prepayment: " + initialPayment * 100 + "% - " + totalCost * initialPayment;
+        result += "\nMonthly payment: " + percent + "% - " + monthlyPayCounter(totalCost, initialPayment, month, percent);
+        result += "\nInitial commission: " + initialCommission + "% - " + totalCost * (initialCommission / 100);
+        result += "\nTotal credit cost: " + totalCostCounter(totalCost, initialPayment, percent, initialCommission, month);
+        result += "\nOverpayment: " + (totalCostCounter(totalCost, initialPayment, percent, initialCommission, month) - totalCost);
+        return result;
     }
 }

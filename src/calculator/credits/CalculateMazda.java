@@ -2,6 +2,11 @@ package calculator.credits;
 
 public class CalculateMazda extends CreditCalculator {
     @Override
+    public String calculate(double totalCost, int i, int j, CreditTable credit) {
+        return "";
+    }
+
+    @Override
     public String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit) {
         StringBuilder result = new StringBuilder();
         result.append("Calculated result for ").append(credit.getClass().getSimpleName());

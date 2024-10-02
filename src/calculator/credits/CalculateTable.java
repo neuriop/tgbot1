@@ -23,4 +23,9 @@ public class CalculateTable extends CreditCalculator {
         result.append("\nTotal cost of the credit is: ").append(Math.ceil(totalCostCounter(totalCost, credit, lowDiffPrev, lowDiffNext)));
         return result.toString();
     }
+
+    @Override
+    public String calculate(double totalCost, int i, int j, CreditTable credit) {
+        return "";
+    }
 }

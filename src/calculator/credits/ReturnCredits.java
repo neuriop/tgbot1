@@ -19,4 +19,13 @@ public class ReturnCredits {
         System.out.println(result);
         return result.toString();
     }
+
+    public String returnCredits(double totalCost, int i, int j){
+        StringBuilder result = new StringBuilder();
+        for (CreditTable credit : credits) {
+            result.append("\n\n").append(credit.calculate(totalCost, i, j));
+        }
+        System.out.println(result);
+        return result.toString();
+    }
 }

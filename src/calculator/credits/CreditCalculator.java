@@ -5,6 +5,8 @@ public abstract class CreditCalculator {
 
     public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit);
 
+    public abstract String calculate(double totalCost, int i, int j, CreditTable credit);
+
     protected boolean lowDiffNextCounter(double totalCost, double monthlyPay, CreditTable credit, int lowDiffPrev, int lowDiffNext, int i) {
         return Math.abs(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[lowDiffNext], credit.getPercentTable()[lowDiffPrev][lowDiffNext]) - monthlyPay) > Math.abs(monthlyPayCounter(totalCost, credit.getInitialPayment()[lowDiffPrev], credit.getMonthList()[i], credit.getPercentTable()[lowDiffPrev][i]) - monthlyPay);
     }
@@ -57,5 +59,8 @@ public abstract class CreditCalculator {
         return lowDiffNext;
     }
 
+    protected double totalCostCounter(double totalCost, double initialPayment, double percent, double commission, int month) {
+        return monthlyPayCounter(totalCost, initialPayment, month, percent) * month + totalCost * (commission / 100);
+    }
 }
 

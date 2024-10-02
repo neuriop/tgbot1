@@ -1,10 +1,9 @@
 package bot;
 
-import calculator.launchpad.LPChecker;
-import checks.CarChecker;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
     private TelegramClient telegramClient;
-    private Map<Long, Conversation> users = new HashMap<>();
+    private Map<Long, Conversation> chats = new HashMap<>();
 
     public NewBot1(String botToken) {
         telegramClient = new OkHttpTelegramClient(botToken);
@@ -29,14 +28,18 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
     @Override
     public void consume(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            long user_id = update.getMessage().getFrom().getId();
             long chat_id = update.getMessage().getChatId();
             String message = update.getMessage().getText();
+            CallbackQuery callbackQuery = update.getCallbackQuery();
             System.out.println(message);
-            if (!users.containsKey(user_id)) {
-                users.put(user_id, new Conversation());
+            if (!chats.containsKey(chat_id)) {
+                chats.put(chat_id, new Conversation());
             }
-            sendMessage(users.get(user_id).processConversation(message), chat_id);
+            if (update.hasCallbackQuery()) {
+                sendMessage(chats.get(chat_id).processConversation(callbackQuery), chat_id);
+            } else {
+                sendMessage(chats.get(chat_id).processConversation(message), chat_id);
+            }
         }
     }
 

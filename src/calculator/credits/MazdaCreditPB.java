@@ -18,4 +18,9 @@ public class MazdaCreditPB extends CreditTable {
     public String calculate(double totalCost, double initialPayment, double monthlyPayment) {
         return calculator.calculate(totalCost, initialPayment, monthlyPayment, new MazdaCreditPB());
     }
+
+    @Override // no logic currently available
+    public String calculate(double totalCost, int i, int j) {
+        return "";
+    }
 }

@@ -24,4 +24,6 @@ public abstract class CreditTable {
     }
 
     public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment);
+
+    public abstract String calculate(double totalCost, int i, int j);
 }
