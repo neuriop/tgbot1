@@ -1,5 +1,7 @@
-package calculator.credits;
+package calculator.credits.calculators;
 
+
+import calculator.credits.tables.CreditTable;
 
 public abstract class CreditCalculator {
 

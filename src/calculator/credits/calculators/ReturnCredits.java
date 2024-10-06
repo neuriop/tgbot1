@@ -1,4 +1,8 @@
-package calculator.credits;
+package calculator.credits.calculators;
+
+import calculator.credits.tables.CreditTable;
+import calculator.credits.tables.MazdaCreditPB;
+import calculator.credits.tables.ToyotaCredit;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package calculator.launchpad;
 
-import checks.Check;
-import checks.Validator;
+import calculator.credits.checks.Check;
+import calculator.credits.checks.Validator;
 
 import java.util.ArrayList;
 import java.util.List;

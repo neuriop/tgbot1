@@ -1,4 +1,4 @@
-package checks;
+package calculator.credits.checks;
 
 public class IsValidNum implements Check {
     @Override

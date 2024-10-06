@@ -1,4 +1,7 @@
-package calculator.credits;
+package calculator.credits.calculators.inputprocessing;
+
+import calculator.credits.tables.CreditTable;
+import calculator.credits.calculators.CreditCalculator;
 
 public class CalculateTable extends CreditCalculator {
     @Override

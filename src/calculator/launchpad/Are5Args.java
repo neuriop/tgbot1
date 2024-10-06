@@ -1,6 +1,6 @@
 package calculator.launchpad;
 
-import checks.Check;
+import calculator.credits.checks.Check;
 
 public class Are5Args implements Check {
     @Override

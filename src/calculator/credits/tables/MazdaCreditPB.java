@@ -1,8 +1,11 @@
-package calculator.credits;
+package calculator.credits.tables;
+
+import calculator.credits.calculators.inputprocessing.CalculateInput;
+import calculator.credits.calculators.inputprocessing.CalculateMazda;
 
 public class MazdaCreditPB extends CreditTable {
     public MazdaCreditPB() {
-        calculator = new CalculateMazda();
+        calculator = new CalculateInput();
         percentTable = new double[][]{
                 {6.5, 21.9},
                 {4.9, 21.9},

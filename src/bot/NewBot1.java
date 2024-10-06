@@ -32,7 +32,8 @@ public class NewBot1 implements LongPollingSingleThreadUpdateConsumer {
                 System.out.println(update.getMessage().getText());
             if (!chats.containsKey(chat_id))
                 chats.put(chat_id, new Conversation(chat_id));
-            sendMessage(chats.get(chat_id).processConversation(update));
+            if (chats.get(chat_id).processConversation(update) != null)
+                sendMessage(chats.get(chat_id).processConversation(update));
         }
     }
 

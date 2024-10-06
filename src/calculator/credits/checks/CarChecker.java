@@ -1,5 +1,5 @@
-package checks;
-import calculator.credits.ReturnCredits;
+package calculator.credits.checks;
+import calculator.credits.calculators.ReturnCredits;
 import java.util.ArrayList;
 import java.util.List;
 

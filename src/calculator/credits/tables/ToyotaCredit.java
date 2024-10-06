@@ -1,8 +1,11 @@
-package calculator.credits;
+package calculator.credits.tables;
+
+import calculator.credits.calculators.inputprocessing.CalculateInput;
+import calculator.credits.calculators.inputprocessing.CalculateTable;
 
 public class ToyotaCredit extends CreditTable {
     public ToyotaCredit() {
-        calculator = new CalculateTable();
+        calculator = new CalculateInput();
         percentTable = new double[][]{
                 {3.49, 6.99, 8.99, 11.99, 11.99},
                 {2.49, 5.99, 8.99, 11.99, 11.99},

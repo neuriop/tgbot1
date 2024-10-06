@@ -1,4 +1,6 @@
-package calculator.credits;
+package calculator.credits.tables;
+
+import calculator.credits.calculators.CreditCalculator;
 
 public abstract class CreditTable {
     protected CreditCalculator calculator;
