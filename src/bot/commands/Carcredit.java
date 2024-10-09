@@ -3,9 +3,9 @@ package bot.commands;
 import bot.Conversation;
 import calculator.credits.brands.Brand;
 import calculator.credits.brands.Mazda;
+import calculator.credits.brands.Renault;
 import calculator.credits.brands.Toyota;
 import calculator.credits.tables.CreditTable;
-import org.jetbrains.annotations.Nullable;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -21,30 +21,33 @@ public class Carcredit implements Command {
     private final String chat_id;
     private CreditTable credit;
     private Brand brand;
-    private Map<String, Brand> brands = new HashMap<>();
-    private Conversation conversation;
+    private final Map<String, Brand> brands = new HashMap<>();
+    private final Conversation conversation;
     private int step = 0;
     private double totalCost;
+    private int i;
 
     public Carcredit(String chat_id, Conversation conversation) {
         this.chat_id = chat_id;
         this.conversation = conversation;
         brands.put(Toyota.class.getSimpleName(), new Toyota());
         brands.put(Mazda.class.getSimpleName(), new Mazda());
+        brands.put(Renault.class.getSimpleName(), new Renault());
     }
 
     @Override
     public SendMessage processCommand(Update update) {
-        SendMessage message;
-        String result = "";
         switch (step) {
             case 0: {
                 step++;
-                conversation.setLastCommand("carcredit");
                 return new SendMessage(chat_id, "Enter car price");
             }
             case 1: {
-                totalCost = doubleValidator(update.getMessage().toString());
+                totalCost = doubleValidator(update.getMessage().getText());
+                if (totalCost == 0){
+                    step--;
+                    return new SendMessage(chat_id, "Invalid value");
+                }
                 step++;
                 return sendBrandButtons();
             }
@@ -61,32 +64,30 @@ public class Carcredit implements Command {
                 if (update.hasCallbackQuery()){
                     step++;
                     credit = brand.getCredit(update.getCallbackQuery().getData());
-                    return sendCreditButtons(credit);
+                    return sendInPayButtons(credit);
                 } else {
-                    return new SendMessage(chat_id, "Press the button to select brand");
+                    return new SendMessage(chat_id, "Press the button to select bank");
                 }
             }
-            case 4: {
+            case 4:{
                 if (update.hasCallbackQuery()){
-                    String[] ij = update.getCallbackQuery().getData().split(" ");
-                    return new SendMessage(chat_id, credit.calculate(totalCost, Integer.parseInt(ij[0]), Integer.parseInt(ij[1])) + "\nType /cancel to cancel this command");
+                    step++;
+                    i = Integer.parseInt(update.getCallbackQuery().getData());
+                    return sendPercentButtons(credit, i);
+                } else {
+                    return new SendMessage(chat_id, "Press the button to select monthly payment");
+                }
+            }
+            case 5: {
+                if (update.hasCallbackQuery()){
+                    int j = Integer.parseInt(update.getCallbackQuery().getData());
+                    return new SendMessage(chat_id, credit.calculate(totalCost, i, j) + "\nType /cancel to cancel this command");
                 } else {
                     step = 0;
-                    conversation.setLastCommand(null);
+                    conversation.setLastCommandToNull();
                     return new SendMessage(chat_id, "Command canceled");
                 }
             }
-        }
-        assert result != null;
-        message = new SendMessage(chat_id, result);
-        return message;
-    }
-
-
-    @Nullable
-    private static String stringValidator(String[] arg) {
-        if (!new calculator.credits.checks.IsValidNum().update(arg)) {
-            return "Invalid number.";
         }
         return null;
     }
@@ -133,19 +134,46 @@ public class Carcredit implements Command {
         return message;
     }
 
+    private SendMessage sendInPayButtons(CreditTable credit) {
+        InlineKeyboardMarkup markup;
+        List<InlineKeyboardRow> rows = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        for (double v: credit.getInitialPayment()) {
+            row.add(createButton(String.valueOf(v * 100), String.valueOf(v * 100)));
+        }
+        rows.add(new InlineKeyboardRow(row));
+        markup = new InlineKeyboardMarkup(rows);
+        SendMessage message = new SendMessage(chat_id, "Select initial prepayment percent");
+        message.setReplyMarkup(markup);
+        return message;
+    }
+
+    private SendMessage sendPercentButtons(CreditTable credit, int i){
+        InlineKeyboardMarkup markup;
+        List<InlineKeyboardRow> rows = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        for (double v : credit.getPercentTable()[i]) {
+            row.add(createButton(String.valueOf(v), String.valueOf(v)));
+        }
+        rows.add(new InlineKeyboardRow(row));
+        markup = new InlineKeyboardMarkup(rows);
+        SendMessage message = new SendMessage(chat_id, "Select monthly payment and percent");
+        message.setReplyMarkup(markup);
+        return message;
+    }
+
     private SendMessage sendCreditButtons(CreditTable credit) {
         InlineKeyboardMarkup markup;
         List<InlineKeyboardRow> rows = new ArrayList<>();
         for (int i = 0; i < credit.getInitialPayment().length; i++) {
             List<InlineKeyboardButton> row = new ArrayList<>();
             for (int j = 0; j < credit.getPercentTable()[i].length; j++) {
-                row.add(createButton(credit.getInitialPayment()[i] * 10 + "% - "
+                row.add(createButton(credit.getInitialPayment()[i] * 100 + "% - "
                                 + credit.getMonthList()[j] + "m/" + credit.getPercentTable()[i][j] + "%",
                         i + " " + j));
             }
             rows.add(new InlineKeyboardRow(row));
         }
-
         markup = new InlineKeyboardMarkup(rows);
         SendMessage message = new SendMessage(chat_id, "Select your prepayment percent and loan term");
         message.setReplyMarkup(markup);

@@ -8,6 +8,7 @@ public abstract class CreditTable {
     protected double[] initialPayment;
     protected int[] monthList;
     protected double[] initialCommission;
+    protected double kasko;
 
     public double[][] getPercentTable() {
         return percentTable;
@@ -25,7 +26,13 @@ public abstract class CreditTable {
         return initialCommission;
     }
 
+    public double getKasko(){
+        return kasko;
+    }
+
     public abstract String calculate(double totalCost, double initialPayment, double monthlyPayment);
 
     public abstract String calculate(double totalCost, int i, int j);
+
+    public abstract String calculate(double totalCost, int i, int j, boolean c);
 }

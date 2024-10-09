@@ -5,6 +5,11 @@ import calculator.credits.calculators.CreditCalculator;
 
 public class CalculateMazda extends CreditCalculator {
     @Override
+    public String calculate(double totalCost, int i, int j, boolean c, CreditTable credit) {
+        return "";
+    }
+
+    @Override
     public String calculate(double totalCost, int i, int j, CreditTable credit) {
         return "";
     }

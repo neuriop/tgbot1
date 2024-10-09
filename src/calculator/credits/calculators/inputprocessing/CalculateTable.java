@@ -5,6 +5,11 @@ import calculator.credits.calculators.CreditCalculator;
 
 public class CalculateTable extends CreditCalculator {
     @Override
+    public String calculate(double totalCost, int i, int j, boolean c, CreditTable credit) {
+        return "";
+    }
+
+    @Override
     public String calculate(double totalCost, double initialPayment, double monthlyPayment, CreditTable credit) {
         StringBuilder result = new StringBuilder();
         result.append("Calculated result for ").append(credit.getClass().getSimpleName());

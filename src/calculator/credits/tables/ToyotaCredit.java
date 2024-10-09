@@ -23,7 +23,12 @@ public class ToyotaCredit extends CreditTable {
     }
 
     @Override
+    public String calculate(double totalCost, int i, int j, boolean c) {
+        return "";
+    }
+
+    @Override
     public String calculate(double totalCost, int i, int j) {
-        return calculator.calculate(totalCost, i, j, new ToyotaCredit());
+        return calculator.calculate(totalCost, i, j, this);
     }
 }
